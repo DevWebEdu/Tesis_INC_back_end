@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FindController;
+use App\Http\Controllers\IncidenciasController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +18,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:sanctum')->group(function(){
+    Route::get('/user',function(Request $request){
+        return $request->user();
+    });
+    Route::post('/logout',[AuthController::class,'logout']);
+    Route::apiResource('/dashboard', DashboardController::class);
+    Route::apiResource('/incidencias', IncidenciasController::class);
+    Route::apiResource('/finding', FindController::class);
 });
+
+
+Route::post('/login', [AuthController::class, 'login']);
