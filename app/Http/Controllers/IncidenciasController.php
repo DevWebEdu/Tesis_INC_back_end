@@ -59,7 +59,7 @@ class IncidenciasController extends Controller
 
 
         return [
-            'message' => 'Se cerró correctamente la incidencia'
+            'message' => 'Ticke cerrado correctamente!!!'
         ];
     }
 

@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\TimeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FindController;
@@ -30,3 +30,4 @@ Route::middleware('auth:sanctum')->group(function(){
 
 
 Route::post('/login', [AuthController::class, 'login']);
+Route::apiResource('/timing', TimeController::class);

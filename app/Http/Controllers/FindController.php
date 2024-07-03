@@ -25,9 +25,9 @@ class FindController extends Controller
         $fecha_envio_from = $request->fecha_envio_from ; 
         $fecha_envio_to = $request->fecha_envio_to ; 
          if ($request->apps_id){
-            $data = new FindCollection(Incidencias::with('app')->with('user')->where('apps_id',$apps_id)->whereBetween('fecha_envio',[$fecha_envio_from,$fecha_envio_to])->orderBy('fecha_envio','asc')->get());
+            $data = new FindCollection(Incidencias::with('app')->with('user')->where('apps_id',$apps_id)->whereBetween('fecha_envio',[$fecha_envio_from,$fecha_envio_to])->orderBy('fecha_envio','desc')->get());
          }else{
-            $data = new FindCollection(Incidencias::with('app')->with('user')->whereBetween('fecha_envio',[$fecha_envio_from,$fecha_envio_to])->orderBy('fecha_envio','asc')->get());
+            $data = new FindCollection(Incidencias::with('app')->with('user')->whereBetween('fecha_envio',[$fecha_envio_from,$fecha_envio_to])->orderBy('fecha_envio','desc')->get());
          };
 
         

@@ -74,6 +74,9 @@ class DashboardController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        return [
+            'data' => Incidencias::where('id',$id)->delete(), // returns 1 
+            'message' => 'Se borro el ticket'
+        ];   
     }
 }
