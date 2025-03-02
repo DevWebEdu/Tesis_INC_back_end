@@ -19,8 +19,9 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
+        'username', // Asegúrate de que esté aquí
         'password',
+        'admin'
     ];
 
     /**
@@ -41,4 +42,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function incidencias()
+    {
+        return $this->hasMany(Incidencias::class, 'users_id');
+    }
 }

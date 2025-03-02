@@ -22,9 +22,8 @@ class DashboardRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => ['required','unique:incs'],
+            'id' => ['required','unique:incs','regex:/^INC\d{9}$/'],
             'apps_id' => ['required']
-
         ];
     }
 
@@ -33,7 +32,8 @@ class DashboardRequest extends FormRequest
         return [
             'id' => ['El id es obligatorio'],
             'apps_id' => ['Seleccionar la aplicacion es necesario'],
-            'id.unique' => ['Ya fue atendido']
+            'id.unique' => ['Ya fue atendido '],
+            'id.regex'=> ['El codigo de las incidencias debe tener como prefijo INC y luego 8 digitos numericos (Ejemplo: INC12345678).'],
         ];
     }
 }

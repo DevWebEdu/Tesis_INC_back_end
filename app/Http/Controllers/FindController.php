@@ -19,21 +19,27 @@ class FindController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    // Funcion de busqueda
     public function store(Request $request)
     {
-        $apps_id =$request->apps_id;
-        $fecha_envio_from = $request->fecha_envio_from ; 
-        $fecha_envio_to = $request->fecha_envio_to ; 
-         if ($request->apps_id){
-            $data = new FindCollection(Incidencias::with('app')->with('user')->where('apps_id',$apps_id)->whereBetween('fecha_envio',[$fecha_envio_from,$fecha_envio_to])->orderBy('fecha_envio','desc')->get());
-         }else{
-            $data = new FindCollection(Incidencias::with('app')->with('user')->whereBetween('fecha_envio',[$fecha_envio_from,$fecha_envio_to])->orderBy('fecha_envio','desc')->get());
-         };
+        $query = Incidencias::with(['app', 'user']);
 
-        
-        return [
-            'data' =>  $data
-        ];
+        // Aplicar filtro por apps_id solo si está presente en el request
+        if ($request->has('apps_id')) {
+            $query->where('apps_id', $request->apps_id);
+        }
+
+        // Aplicar filtro por fechas solo si ambos valores están presentes
+        if ($request->has(['fecha_envio_from', 'fecha_envio_to'])) {
+            $query->whereBetween('fecha_envio', [$request->fecha_envio_from, $request->fecha_envio_to]);
+        }
+
+        // Obtener los datos ordenados por fecha_envio descendente
+        $data = new FindCollection($query->orderBy('fecha_envio', 'desc')->get());
+
+        return response()->json([
+            'data' => $data
+        ]);
     }
 
     /**
