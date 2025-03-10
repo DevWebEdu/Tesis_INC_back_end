@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AplicacionController;
 use App\Http\Controllers\TimeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
@@ -30,6 +31,9 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::apiResource('/incidencias', IncidenciasController::class);
     Route::apiResource('/finding', FindController::class);
 
+    //Trae las apps
+    Route::get('/apps',[AplicacionController::class,'getApplications']);
+    
     //Vistas de perfil y modificacion de perfil del usuario
     //perfil
     Route::get('/profile',[WorkerController::class,'profile']);
@@ -52,7 +56,8 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/createworker',[AdminController::class,'createWorker'])->middleware('admin');
     //Borrar un trabajador
     Route::delete('/deleteworker/{id}',[AdminController::class, 'deleteById'])->middleware('admin');
-
+    //Convertir un usuario a admin
+    Route::put('/turnadmin/{id}', [AdminController::class,'turnAdminWorker'])->middleware('admin');
 
 
 });

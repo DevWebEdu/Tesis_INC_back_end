@@ -28,10 +28,11 @@ class AdminController extends Controller
     // Metodo para traer un trabajador
     public function getWorkerById(string $id)
     {
-        $user = DB::table('users')->where('id', $id)->get();
-        return [
-            "user" => $user
-        ];
+        $user = User::find($id);
+        return response()->json([
+            'user' => $user,
+            'message'=> 'Se le quito el admin'
+        ], 200);
     }
     // Metodo para modificar un trabajador
     public function updateWorkerById(UpdateWorkerRequest $request, string $id)
@@ -45,7 +46,7 @@ class AdminController extends Controller
                 'username' => $request->username ?? $userSelected->username,
                 'name' => $request->name ?? $userSelected->name,
                 'password' => $request->password ?? $userSelected->password,
-                'admin' => $request->admin  ?? $userSelected->admin,
+                'admin' => $request->admin ?? $userSelected->admin,
                 'updated_at' => Carbon::now()
             ]);
 
@@ -137,4 +138,44 @@ class AdminController extends Controller
             ], 500);
         }
     }
+
+    public function turnAdminWorker(string $id)
+    {
+        try {
+            $user = User::find($id);
+            if (!$user) {
+                return response()->json([
+                    'message' => 'Usuario no encontrado'
+                ], 404);
+            }
+
+            if($user->admin == '0') {
+                 $user->update([
+                    'admin' => '1'
+                 ]);
+
+                 return response()->json([
+                    'user' => $user,
+                    'message' => 'Se le dio  admin'
+                ], 200);
+            }else{
+                $user->update([
+                    'admin' => '0'
+                 ]);
+
+                 return response()->json([
+                    'user' => $user,
+                    'message'=> 'Se le quito el admin'
+                ], 200);
+            }
+
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Error al obtener las incidencias',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+
+    }
+
 }

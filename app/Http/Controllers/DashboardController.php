@@ -31,14 +31,14 @@ class DashboardController extends Controller
         $incidencia[] = [
             'id' => $request->id,
             'users_id' => Auth::user()->id,
-            'fecha_envio' => Carbon::now() ,
+            'fecha_envio' => Carbon::parse(Carbon::now())->setTimezone('America/Lima') ,
             'resumen' => null,
             'apps_id' => $request->apps_id,
             'nota'=> null,
-            'estado' => 'atendiendo',
+            'estado' => 'Atendiendo',
             'fecha_atencion' => null, 
             'observacion' => null,
-            'created_at' => Carbon::now()
+            'created_at' => Carbon::parse(Carbon::now())->setTimezone('America/Lima')
         ];
 
         Incidencias::insert($incidencia);
@@ -56,7 +56,7 @@ class DashboardController extends Controller
     {
         /*new DashboardCollection(Incidencias::with('app')->with('user')->where('id',$id)->get());*/
         return [
-            'data' => new DashboardCollection(Incidencias::with('app')->with('user')->where('id',$id)->get()),
+            'data' =>Incidencias::with('app')->with('user')->where('id',$id)->get(),
             'message' => 'Hola desde show'
         ];
     }

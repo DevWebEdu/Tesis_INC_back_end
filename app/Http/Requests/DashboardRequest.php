@@ -22,7 +22,7 @@ class DashboardRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => ['required','unique:incs','regex:/^INC\d{9}$/'],
+            'id' => ['required','unique:incs','regex:/^INC\d{12}$/'],
             'apps_id' => ['required']
         ];
     }

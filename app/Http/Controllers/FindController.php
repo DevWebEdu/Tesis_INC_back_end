@@ -13,7 +13,11 @@ class FindController extends Controller
      */
     public function index()
     {
-        return  new FindCollection(Incidencias::with('app')->with('user')->get());
+        //return  new FindCollection(Incidencias::with('app')->with('user')->get());
+            $incidencias = Incidencias::with('app')->with('user')->get();
+        return response()->json([
+            'data' => $incidencias
+        ]); 
     }
 
     /**

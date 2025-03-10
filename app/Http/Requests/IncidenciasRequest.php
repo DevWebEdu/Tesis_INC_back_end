@@ -22,11 +22,8 @@ class IncidenciasRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'apps_id' => ['required'],
-            'fecha_envio' => 'required',
             'resumen' => 'required',
             'nota' => 'required' ,
-            'fecha_atencion' => 'required',
             'observacion' => 'required'
         ];
     }
@@ -34,11 +31,8 @@ class IncidenciasRequest extends FormRequest
     public function messages()
     {
         return [
-            'apps_id' => ['Seleccionar la aplicacion es necesario'],
-            'fecha_envio' => ['La fecha de envio es obligatorio'],
             'resumen' => ['El resumen es obligatorio'],
             'nota' => ['El nota es obligatorio'],
-            'fecha_atencion' => ['La fecha de atencion es obligatorio'],
             'observacion' => ['La observacion es obligatorio'],
         ];
     }

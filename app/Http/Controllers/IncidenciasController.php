@@ -47,19 +47,17 @@ class IncidenciasController extends Controller
         $updating = DB::table('incs')
                    ->where('id',$id)
                     ->update([  
-                                'fecha_envio' => $request->fecha_envio ,
                                 'resumen' => $request->resumen,
-                                'apps_id' => $request->apps_id,
                                 'nota'=> $request->nota,
-                                'estado' => 'resuelto',
-                                'fecha_atencion' => $request->fecha_atencion, 
-                                 'observacion' => $request->observacion,
-                                'updated_at' => Carbon::now()
+                                'estado' => 'Resuelto',
+                                'fecha_atencion' => Carbon::parse(Carbon::now())->setTimezone('America/Lima'), 
+                                'observacion' => $request->observacion,
+                                'updated_at' => Carbon::parse(Carbon::now())->setTimezone('America/Lima')
                             ]);
 
 
         return [
-            'message' => 'Ticket cerrado correctamente!!!'
+            'message' => 'Ticket resuelto correctamente!!!'
         ];
     }
 
